@@ -83,26 +83,30 @@ export default {
         let primaryAddress =  this.web3Plug.web3.utils.toChecksumAddress( allAccounts[0] ) 
 
         let assetArray =   tokens.map(x =>  contractData[x] )
-         
+
+
 
        for(let token  of assetArray){
           if(token == null ) continue
 
            let tokenFullData = Object.assign({},token)
 
-         
+
+          let tokenDecimals = tokenFullData.decimals
+
+          console.log('tokenDecimals',tokenDecimals)
 
          let tokenContract = this.web3Plug.getCustomContract(this.web3Plug.web3, permissibleTokenABI, token.address)
 
           let balance = await tokenContract.methods.balanceOf(primaryAddress).call({from:primaryAddress})
 
           tokenFullData.balance = balance
-          tokenFullData.balance_formatted = balance
+          tokenFullData.balance_formatted = parseFloat(this.web3Plug.rawAmountToFormatted(tokenFullData.balance,tokenDecimals)) .toFixed(2)
 
            let approved = await tokenContract.methods.allowance(primaryAddress,lavaWalletAddress).call({from:primaryAddress})
 
-          tokenFullData.approved = approved
-          tokenFullData.approved_formatted = approved
+          tokenFullData.approved = Math.min(approved,balance)
+          tokenFullData.approved_formatted =  parseFloat(this.web3Plug.rawAmountToFormatted(tokenFullData.approved,tokenDecimals)).toFixed(2)
 
         dataArrayCache.push( tokenFullData )
 
