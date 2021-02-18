@@ -251,11 +251,14 @@
 
 <script>
 
+
+
 import  PermitUtils from '../../js/eip712/permit-utils.js' 
 import  EIP712HelperV3 from '../../js/eip712/EIP712HelperV3.js' 
 import  EIP712SignPermit from '../../js/eip712/eip712-sign-permit.js'
 import LavaPacketUtils from '../../js/eip712/lavapacket-utils.js'
  
+ const web3utils = require('web3').utils
 
 const permissibleTokenABI = require('../../abi/PermissibleToken.json')
 const lavaWalletABI = require('../../abi/LavaWallet.json')
@@ -303,14 +306,14 @@ export default {
         let primaryAddress =  window.web3.utils.toChecksumAddress( allAccounts[0] ) 
  
         let contractData = this.web3Plug.getContractDataForActiveNetwork();
-        let lavaContractAddress = contractData['LavaWallet'].address
+        let lavaContractAddress =  contractData['LavaWallet'].address 
        
 
         let permitInputData = {
  
-          tokenAddress: assetData.address,
-          permitFrom: primaryAddress,
-          permitTo: lavaContractAddress,
+          tokenAddress: web3utils.toChecksumAddress(assetData.address),
+          permitFrom: web3utils.toChecksumAddress(primaryAddress),
+          permitTo: web3utils.toChecksumAddress(lavaContractAddress),
           expires: 0,
           allowed: true,
         }
@@ -352,8 +355,8 @@ export default {
 
 
          let permitArgs = [
-          metadata.from,
-          metadata.to,
+          web3utils.toChecksumAddress( metadata.from),
+          web3utils.toChecksumAddress( metadata.to ),
           metadata.nonce,
           metadata.expires,
           metadata.allowed,

@@ -102,7 +102,7 @@ export default {
            let approved = await tokenContract.methods.allowance(primaryAddress,lavaWalletAddress).call({from:primaryAddress})
 
           tokenFullData.approved = approved
-          tokenFullData.approved_formatted = balance
+          tokenFullData.approved_formatted = approved
 
         dataArrayCache.push( tokenFullData )
 
