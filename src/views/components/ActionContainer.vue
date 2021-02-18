@@ -148,7 +148,7 @@
                           <div class="label">Method</div>
 
                          <div class="select">
-                            <select class=" " onchange=" " v-model="transferTokenMethod" placeholder="">
+                            <select class=" text-black " onchange=" " v-model="transferTokenMethod" placeholder="">
                               <option>transfer</option>
                               <option>approveAndCall</option>
                            </select>
@@ -170,7 +170,7 @@
                           <div class="label">Relay Authority</div>
 
                          <div class="select">
-                            <select class=" " onchange=" " v-model="relayAuthorityType" placeholder="">
+                            <select class=" text-black  " onchange=" " v-model="relayAuthorityType" placeholder="">
                               <option>any relayers</option>
                            </select>
                          </div>
@@ -399,8 +399,8 @@ export default {
           to: this.transferTokenRecipient,
           walletAddress: lavaContractAddress,
           tokenAddress: assetData.address,
-          tokenAmount:  this.transferTokenQuantity,
-          relayerReward:  0,
+          tokenAmount: parseInt(this.transferTokenQuantity) ,
+          relayerReward:  parseInt(this.transferTokenRelayReward),
           expires: 0,
           nonce:  LavaPacketUtils.generateRandomNonce()
         }

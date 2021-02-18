@@ -191,8 +191,8 @@ export default class LavaPacketUtils {
                   to: web3utils.toChecksumAddress(to),
                   wallet: web3utils.toChecksumAddress(walletAddress),
                   token: web3utils.toChecksumAddress(tokenAddress),
-                  tokens: tokenAmount,
-                  relayerRewardTokens: relayerRewardTokens,
+                  tokens: parseInt(tokenAmount),
+                  relayerRewardTokens: parseInt(relayerRewardTokens),
                   expires: expires,
                   nonce: nonce
               }
