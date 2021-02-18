@@ -393,6 +393,8 @@ export default {
  
         let contractData = this.web3Plug.getContractDataForActiveNetwork();
         let lavaContractAddress = contractData['LavaWallet'].address
+
+        let tokenDecimals = assetData.decimals
        
 
         let lavaPacketInputData = {
@@ -402,8 +404,8 @@ export default {
           to: this.transferTokenRecipient,
           walletAddress: lavaContractAddress,
           tokenAddress: assetData.address,
-          tokenAmount: parseInt(this.transferTokenQuantity) ,
-          relayerReward:  parseInt(this.transferTokenRelayReward),
+          tokenAmount: this.web3Plug.formattedAmountToRaw(this.transferTokenQuantity,tokenDecimals).toString() ,
+          relayerReward: this.web3Plug.formattedAmountToRaw(this.transferTokenRelayReward,tokenDecimals).toString(),
           expires: 0,
           nonce:  LavaPacketUtils.generateRandomNonce()
         }

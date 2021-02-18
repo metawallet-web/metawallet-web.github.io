@@ -55,7 +55,9 @@
 
 const Web3 = require('web3');
 const web3utils = Web3.utils;
-const BigNumber = Web3.utils.BN;
+//const BigNumber = Web3.utils.BN;
+
+import BigNumber from 'bignumber.js'
 
 const contractData = require('../config/contract-data.json')
  
@@ -199,7 +201,7 @@ export default class Web3Plug {
 
   formattedAmountToRaw(amountFormatted,decimals)
   {
-
+    console.log('meep',new BigNumber( 10 ))
     var multiplier = new BigNumber( 10 ).exponentiatedBy( decimals ) ;
 
 
