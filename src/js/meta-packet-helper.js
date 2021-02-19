@@ -36,7 +36,7 @@ export default class MetaPacketHelper {
   {
 
 
-      if(!relayNodeURL.startsWith("http://"))
+      if(!relayNodeURL.startsWith("http://")  && !relayNodeURL.startsWith("https://"))
       {
         relayNodeURL = "http://"+relayNodeURL;
       }
@@ -83,7 +83,7 @@ export default class MetaPacketHelper {
   {
 
 
-      if(!relayNodeURL.startsWith("http://"))
+    if(!relayNodeURL.startsWith("http://")  && !relayNodeURL.startsWith("https://"))
       {
         relayNodeURL = "http://"+relayNodeURL;
       }
