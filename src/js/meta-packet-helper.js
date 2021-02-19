@@ -56,13 +56,15 @@ export default class MetaPacketHelper {
 
         xhr.onreadystatechange = function() {
           if (xhr.readyState === 4) {
-            //var response = JSON.parse(xhr.responseText);
+           
               if (xhr.status === 200  ) {
-                 console.log('successful');
-                 resolve({success:true, packet: metaPacketData})
+
+                var response = JSON.parse(xhr.responseText);
+                 console.log('successful', response);
+                 resolve({gotReply:true, packet: metaPacketData, response: response})
               } else {
                  console.log('failed');
-                 resolve({success:false, message: 'Request failed.  Returned status of ' + xhr.status});
+                 resolve({gotReply:false, message: 'Request failed.  Returned status of ' + xhr.status});
 
               }
           }

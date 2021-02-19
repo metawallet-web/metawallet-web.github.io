@@ -516,13 +516,22 @@ export default {
 
           this.broadcastMessage = null
   
-         let response = await  MetaPacketHelper.sendLavaPacket(fullURL,dataToPost)
+         let result = await  MetaPacketHelper.sendLavaPacket(fullURL,dataToPost)
  
 
-          console.log(response)
+          console.log(result)
 
-            if(response.success){
-              this.broadcastMessage = "Broadcast successful."
+            if(result.gotReply){
+              let response = result.response 
+              
+              if(response.success){
+                this.broadcastMessage = "Broadcast successful."
+
+              }else{
+                  this.broadcastMessage = response.message
+              }
+              
+
             }
  
       },
