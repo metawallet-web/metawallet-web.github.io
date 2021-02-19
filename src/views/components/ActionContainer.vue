@@ -344,11 +344,16 @@ export default {
         let assetData = this.selectedActionAsset
 
         let allAccounts = await this.web3Plug.getConnectedAccounts() 
-        let primaryAddress =  window.web3.utils.toChecksumAddress( allAccounts[0] ) 
+        let primaryAddress =  this.web3Plug.web3.utils.toChecksumAddress( allAccounts[0] ) 
  
         let contractData = this.web3Plug.getContractDataForActiveNetwork();
         let lavaContractAddress =  contractData['LavaWallet'].address 
-       
+
+        let myTokenContract = this.web3Plug.getCustomContract(this.web3Plug.web3, permissibleTokenABI, assetData.address)
+
+
+        let tokenName = await myTokenContract.methods.name().call()
+         
 
         let permitInputData = {
  
@@ -363,7 +368,8 @@ export default {
 
 
        this.permitMetaData = JSON.stringify({
-
+         tokenName: tokenName, 
+         tokenAddress: assetData.address, 
          from: signResult.from,
          to: signResult.to,
          tokenAddress: signResult.tokenAddress,
