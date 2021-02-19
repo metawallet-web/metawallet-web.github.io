@@ -481,7 +481,7 @@ export default {
 
           
   
-       let result = await  MetaPacketHelper.sendLavaPacket(fullURL,dataToPost)
+       let response = await  MetaPacketHelper.sendLavaPacket(fullURL,dataToPost)
 
         /*
           let response = await axios({
