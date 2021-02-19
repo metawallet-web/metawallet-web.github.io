@@ -206,7 +206,7 @@
                              <div class="whitespace-sm"></div>
 
                            <div id="btn-broadcast-lava-packet" v-if="lavaMetadata">
-                             <div class="button inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold m-2 py-2 px-4 rounded cursor-pointer" v-bind:click="actionBroadcastLavaPacket">Broadcast Lava Packet To Relay</div>
+                             <div class="button inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold m-2 py-2 px-4 rounded cursor-pointer" v-on:click="actionBroadcastLavaPacket">Broadcast Lava Packet To Relay</div>
                            </div>
 
                            <div class="whitespace-sm"></div>
@@ -257,12 +257,17 @@ import  PermitUtils from '../../js/eip712/permit-utils.js'
 import  EIP712HelperV3 from '../../js/eip712/EIP712HelperV3.js' 
 import  EIP712SignPermit from '../../js/eip712/eip712-sign-permit.js'
 import LavaPacketUtils from '../../js/eip712/lavapacket-utils.js'
+
+import MetaPacketHelper from '../../js/meta-packet-helper'
  
  const web3utils = require('web3').utils
 
 const permissibleTokenABI = require('../../abi/PermissibleToken.json')
 const lavaWalletABI = require('../../abi/LavaWallet.json')
  const ethUtil = require('ethereumjs-util')
+
+
+ const axios = require('axios')
 
 
 export default {
@@ -461,9 +466,38 @@ export default {
       },
 
 
-      actionBroadcastLavaPacket(){
+      async actionBroadcastLavaPacket(){
 
         console.log('broadcast lava packet ')
+
+          let fullURL = this.relayNodeURL 
+
+
+          let metadata = JSON.parse(this.lavaMetadata)
+
+
+          let dataToPost = metadata
+
+
+          
+  
+       let result = await  MetaPacketHelper.sendLavaPacket(fullURL,dataToPost)
+
+        /*
+          let response = await axios({
+            method: 'post',
+            url: fullURL+'/lavapacket',
+            
+            data: dataToPost,
+              headers: {
+                  'Access-Control-Allow-Origin': '*',
+                  'Content-type': 'application/json',
+                }
+          });*/
+
+          console.log(response)
+
+        // this.relayNodeURL 
       }
 
 
