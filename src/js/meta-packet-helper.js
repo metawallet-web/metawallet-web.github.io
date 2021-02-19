@@ -32,25 +32,25 @@ export default class MetaPacketHelper {
   }
 
 
-  static async sendLavaPacket(lavaNodeURL, lavaPacketData)
+  static async sendLavaPacket(relayNodeURL, metaPacketData)
   {
 
 
-      if(!lavaNodeURL.startsWith("http://"))
+      if(!relayNodeURL.startsWith("http://"))
       {
-        lavaNodeURL = "http://"+lavaNodeURL;
+        relayNodeURL = "http://"+relayNodeURL;
       }
 
-      if(!lavaNodeURL.endsWith("/lavapacket"))
+      if(!relayNodeURL.endsWith("/lavapacket"))
       {
-        lavaNodeURL = lavaNodeURL+"/lavapacket";
+        relayNodeURL = relayNodeURL+"/lavapacket";
       }
 
       return new Promise(async resolve => {
 
         var xhr = new XMLHttpRequest();
 
-        xhr.open('POST', lavaNodeURL);
+        xhr.open('POST', relayNodeURL);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
 
@@ -59,7 +59,7 @@ export default class MetaPacketHelper {
             //var response = JSON.parse(xhr.responseText);
               if (xhr.status === 200  ) {
                  console.log('successful');
-                 resolve({success:true, packet: lavaPacketData})
+                 resolve({success:true, packet: metaPacketData})
               } else {
                  console.log('failed');
                  resolve({success:false, message: 'Request failed.  Returned status of ' + xhr.status});
@@ -68,7 +68,7 @@ export default class MetaPacketHelper {
           }
         }
 
-        xhr.send(MetaPacketHelper.serializePacketData( lavaPacketData ));
+        xhr.send(MetaPacketHelper.serializePacketData( metaPacketData ));
 
       })
 
@@ -76,6 +76,49 @@ export default class MetaPacketHelper {
   }
 
 
+
+  static async sendPermitPacket(relayNodeURL, metaPacketData)
+  {
+
+
+      if(!relayNodeURL.startsWith("http://"))
+      {
+        relayNodeURL = "http://"+relayNodeURL;
+      }
+
+      if(!relayNodeURL.endsWith("/permitpacket"))
+      {
+        relayNodeURL = relayNodeURL+"/permitpacket";
+      }
+
+      return new Promise(async resolve => {
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open('POST', relayNodeURL);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4) {
+            //var response = JSON.parse(xhr.responseText);
+              if (xhr.status === 200  ) {
+                 console.log('successful');
+                 resolve({success:true, packet: metaPacketData})
+              } else {
+                 console.log('failed');
+                 resolve({success:false, message: 'Request failed.  Returned status of ' + xhr.status});
+
+              }
+          }
+        }
+
+        xhr.send(MetaPacketHelper.serializePacketData( metaPacketData ));
+
+      })
+
+
+  }
 
 
 }

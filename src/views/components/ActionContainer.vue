@@ -94,22 +94,57 @@
             <div class="input-container padding-md"   >
               <div class="label">Approve Tokens</div>
 
-              <div class="flex flex-row">
-                <div class=" flex-grow ">
+              <div class="flex flex-row w-full">
+                <div class=" flex-grow w-1/2">
                   <div class="form-group">
                       <input type="text" class=" hidden h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline " v-model="permitTokenQuantity" placeholder="token amount">
                       <div class="button inline-block bg-green-500 hover:bg-green-700 text-white font-bold m-2 py-2 px-4 rounded cursor-pointer" v-on:click="actionPermitTokens"> Permit All </div>
            
                   </div>
                 </div>
-                <div class="  flex-grow">
-                    <div> Meta Packet </div> 
-                    <textarea class="text-black" v-model="permitMetaData"></textarea>
-                 </div>
-
+              
                  
-                <div class="  flex-grow">
+                <div class="  flex-grow  w-1/2">
                     
+
+
+                     <div class="form-group padding-md" v-if="permitMetaData">
+                           <div class="label">Relay Node URL</div>
+                           <input class="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline" v-model="relayNodeURL" placeholder="xxx.xxx.xxx.xxx:yyyy">
+                          
+
+
+                             <div class="whitespace-sm"></div>
+
+                           <div id="btn-broadcast-lava-packet" v-if="permitMetaData">
+                             <div class="button inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold m-2 py-2 px-4 rounded cursor-pointer" v-on:click="actionBroadcastPermitPacket">Broadcast Permit Packet To Relay</div>
+                           </div>
+
+                          
+
+                           <div class="subtitle color-primary has-text-centered" v-cloak v-if="permitMetaData && broadcastMessage" >
+                             {{ broadcastMessage }}
+                           </div>
+
+                            <div class="whitespace-sm"></div>
+                       </div>
+
+
+
+
+                      <div class="whitespace-sm"></div>
+
+
+
+
+                      <div v-if="permitMetaData" >
+                        <div> Meta Packet </div> 
+                        <textarea class="text-black" v-model="permitMetaData"></textarea>
+                    </div>
+
+
+
+
 
                       <div class="button inline-block bg-purple-500 hover:bg-purple-700 text-white font-bold m-2 py-2 px-4 rounded cursor-pointer" v-if="permitMetaData" v-on:click="actionSubmitPermit"> Submit Meta Tx </div>
 
@@ -200,8 +235,7 @@
                        <div class="form-group padding-md" v-if="lavaMetadata">
                            <div class="label">Relay Node URL</div>
                            <input class="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline" v-model="relayNodeURL" placeholder="xxx.xxx.xxx.xxx:yyyy">
-                           <a v-bind:href="relayNodeURL"> Visit Relay Website </a>
-
+                         
 
                              <div class="whitespace-sm"></div>
 
@@ -209,11 +243,13 @@
                              <div class="button inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold m-2 py-2 px-4 rounded cursor-pointer" v-on:click="actionBroadcastLavaPacket">Broadcast Lava Packet To Relay</div>
                            </div>
 
-                           <div class="whitespace-sm"></div>
+                         
 
                            <div class="subtitle color-primary has-text-centered" v-cloak v-if="lavaMetadata && broadcastMessage" >
                              {{ broadcastMessage }}
                            </div>
+
+                             <div class="whitespace-sm"></div>
                        </div>
 
 
@@ -478,29 +514,44 @@ export default {
 
           let dataToPost = metadata
 
-
-          
+          this.broadcastMessage = null
   
-       let response = await  MetaPacketHelper.sendLavaPacket(fullURL,dataToPost)
-
-        /*
-          let response = await axios({
-            method: 'post',
-            url: fullURL+'/lavapacket',
-            
-            data: dataToPost,
-              headers: {
-                  'Access-Control-Allow-Origin': '*',
-                  'Content-type': 'application/json',
-                }
-          });*/
+         let response = await  MetaPacketHelper.sendLavaPacket(fullURL,dataToPost)
+ 
 
           console.log(response)
 
-        // this.relayNodeURL 
+            if(response.success){
+              this.broadcastMessage = "Broadcast successful."
+            }
+ 
+      },
+
+      async actionBroadcastPermitPacket(){
+
+          console.log('broadcast permit packet ')
+
+          let fullURL = this.relayNodeURL 
+
+
+          let metadata = JSON.parse(this.permitMetaData)
+
+
+          let dataToPost = metadata
+
+         this.broadcastMessage = null
+
+  
+         let response = await MetaPacketHelper.sendPermitPacket(fullURL,dataToPost)
+  
+
+          console.log(response)
+
+            if(response.success){
+              this.broadcastMessage = "Broadcast successful."
+            }
+          
       }
-
-
 
 
 
