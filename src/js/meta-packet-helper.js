@@ -52,7 +52,7 @@ export default class MetaPacketHelper {
 
         
         socket.emit("lavaPacket", {packet: metaPacketData} );
- 
+        socket.close()
 
       })
 
@@ -73,7 +73,7 @@ export default class MetaPacketHelper {
 
       
       socket.emit("permitPacket", {packet: metaPacketData} );
-
+      socket.close()
 
     })
 
