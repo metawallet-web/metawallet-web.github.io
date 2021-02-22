@@ -15,10 +15,12 @@ https://kovan.etherscan.io/address/0xf5b71f8d25d3e90b9ec0c08d890853187df4bef4#wr
 integrate eip712-sign-permit
 
 
-1. Make permit work 
+1.   Make matic approve type tokens work  (deploy one to kovan , a third tab) 
+
+  
 
 
-2. Make lava transfer work 
+2.  Deploy a middleman contract that uses mload 
 
 
 
