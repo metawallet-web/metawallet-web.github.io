@@ -37,6 +37,10 @@ export default class MetaPacketHelper {
 
  //:8443  wss://localhost:8443
  //ws://127.0.0.1:8443
+
+ // ws://157.230.93.59:8443
+ wss://apexrelay.com:8443
+
   static async sendLavaPacket(relayNodeURL, metaPacketData)
   {
 
@@ -52,7 +56,14 @@ export default class MetaPacketHelper {
 
         
         socket.emit("lavaPacket", {packet: metaPacketData} );
-        socket.close()
+
+
+        socket.on("lavaPacket",(data) => {
+          console.log('got back',data)
+          resolve(data)
+        });
+
+       
 
       })
 
@@ -73,7 +84,13 @@ export default class MetaPacketHelper {
 
       
       socket.emit("permitPacket", {packet: metaPacketData} );
-      socket.close()
+      
+
+
+      socket.on("permitPacket",(data) => {
+        console.log('got back',data)
+        resolve(data)
+      });
 
     })
 
