@@ -7,6 +7,9 @@
 //var tokenData = require('../config/token-data.json')
 //var defaultTokens = require('../config/default-tokens.json')
 
+import { io } from "socket.io-client";
+
+
 var defaultTokenData;
 
 //var deployedContractInfo = require('../contracts/DeployedContractInfo.json')
@@ -32,45 +35,24 @@ export default class MetaPacketHelper {
   }
 
 
+ //:8443  wss://localhost:8443
+ //ws://127.0.0.1:8443
   static async sendLavaPacket(relayNodeURL, metaPacketData)
   {
 
+    
 
-      if(!relayNodeURL.startsWith("http://")  && !relayNodeURL.startsWith("https://"))
-      {
-        relayNodeURL = "http://"+relayNodeURL;
-      }
-
-      if(!relayNodeURL.endsWith("/lavapacket"))
-      {
-        relayNodeURL = relayNodeURL+"/lavapacket";
-      }
+      
 
       return new Promise(async resolve => {
 
-        var xhr = new XMLHttpRequest();
+        //const socket = io("https://server-domain.com");
 
-        xhr.open('POST', relayNodeURL);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        const socket = io( relayNodeURL );
 
-
-        xhr.onreadystatechange = function() {
-          if (xhr.readyState === 4) {
-           
-              if (xhr.status === 200  ) {
-
-                var response = JSON.parse(xhr.responseText);
-                 console.log('successful', response);
-                 resolve({gotReply:true, packet: metaPacketData, response: response})
-              } else {
-                 console.log('failed');
-                 resolve({gotReply:false, message: 'Request failed.  Returned status of ' + xhr.status});
-
-              }
-          }
-        }
-
-        xhr.send(MetaPacketHelper.serializePacketData( metaPacketData ));
+        
+        socket.emit("lavaPacket", {packet: metaPacketData} );
+ 
 
       })
 
@@ -83,42 +65,17 @@ export default class MetaPacketHelper {
   {
 
 
-    if(!relayNodeURL.startsWith("http://")  && !relayNodeURL.startsWith("https://"))
-      {
-        relayNodeURL = "http://"+relayNodeURL;
-      }
+    return new Promise(async resolve => {
 
-      if(!relayNodeURL.endsWith("/permitpacket"))
-      {
-        relayNodeURL = relayNodeURL+"/permitpacket";
-      }
+      //const socket = io("https://server-domain.com");
 
-      return new Promise(async resolve => {
+      const socket = io( relayNodeURL );
 
-        var xhr = new XMLHttpRequest();
-
-        xhr.open('POST', relayNodeURL);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      
+      socket.emit("permitPacket", {packet: metaPacketData} );
 
 
-        xhr.onreadystatechange = function() {
-          if (xhr.readyState === 4) {
-            //var response = JSON.parse(xhr.responseText);
-              if (xhr.status === 200  ) {
-                 console.log('successful');
-                 resolve({success:true, packet: metaPacketData})
-              } else {
-                 console.log('failed');
-                 resolve({success:false, message: 'Request failed.  Returned status of ' + xhr.status});
-
-              }
-          }
-        }
-
-        xhr.send(MetaPacketHelper.serializePacketData( metaPacketData ));
-
-      })
-
+    })
 
   }
 
