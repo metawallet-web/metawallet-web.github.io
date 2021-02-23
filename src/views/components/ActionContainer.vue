@@ -692,11 +692,9 @@ export default {
 
 
        
-        let databytes = web3utils.padLeft( this.transferTokenRecipient, 32 );
-        //databytes = databytes.concat(  web3utils.hexToUtf8(  '0x3' ) )
-        //databytes = databytes.concat(  web3utils.hexToUtf8(  '0x4' ) )
+        let databytes =  abi.encodedPacked(this.transferTokenRecipient, '0x3',  '0x4' )  
 
-        let middlemanContractAddress  =  contractData['SimpleMiddleman'].address
+        let middlemanContractAddress  =  contractData['MetadataMiddleman'].address
        
 
         let lavaPacketInputData = {
