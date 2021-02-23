@@ -9,7 +9,7 @@
       "TEST":{"name":"Test Token", "symbol":"TEST", "decimals": 18,  "address":"0x7b3a2c7d65c357fa4ccf4ba93d3c0781b843a4f3", "imgurl":"/assets/images/tokens/dai.png" }, 
       "LavaWallet":{"name":"Lava Wallet", "address":"0xcaee7daa8c6f56fa8dcdc5b77b2178dbc374e25c"},
       "SimpleMiddleman":{"name":"Simple Middleman", "address":"0x09b025d93cc1198db1f2030c7a25c9864f0fb08e"},
-      "MetadataMiddleman":{"name":"Metadata Middleman", "address":"0xd2004b9a54f963c3ae2852b0abba36246be2583a"}
+      "MetadataMiddleman":{"name":"Metadata Middleman", "address":"0x7350d8a2e2ad50c40fb9f8316de50fa1b7757ea5"}
       
     }
 
