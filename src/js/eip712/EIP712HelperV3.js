@@ -51,12 +51,17 @@ export default class EIP712HelperV3{
         encTypes.push('bytes32');
         encValues.push(EIP712HelperV3.typeHash(primaryType, types));
 
+        console.log('typehash 1  ', EIP712HelperV3.typeHash(primaryType, types))
+
         // Add field contents
         for (let field of types[primaryType]) {
             let value = data[field.name];
             if (field.type == 'string' || field.type == 'bytes') {
                 encTypes.push('bytes32');
                 value = ethUtil.keccak(Buffer.from(value));
+
+                console.log('typehash 2  ', value)
+
                 encValues.push(value);
             } else if (types[field.type] !== undefined) {
                 encTypes.push('bytes32');

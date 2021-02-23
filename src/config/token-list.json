@@ -3,7 +3,7 @@
     
   
     "kovan":[ "TEST" ],
-    "xdai":[ "wxdai" , "weth"]
+    "xdai":[ "zxbtc" , "weth"]
 
   }
 }

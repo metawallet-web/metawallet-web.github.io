@@ -205,7 +205,7 @@ export default class LavaPacketUtils {
         return typedData;
     }
 
-     static getLavaParamsFromData(method,relayAuthority,from,to,walletAddress,tokenAddress,tokenAmount,relayerReward,expires,nonce)
+  /*   static getLavaParamsFromData(method,relayAuthority,from,to,walletAddress,tokenAddress,tokenAmount,relayerReward,expires,nonce)
      {
          var params = [
 
@@ -263,7 +263,7 @@ export default class LavaPacketUtils {
 
          return params;
      }
-
+*/
 
 
 
@@ -280,7 +280,7 @@ export default class LavaPacketUtils {
 
 
 
-        static getContractLavaMethod(walletContract,packetData)
+      /*  static getContractLavaMethod(walletContract,packetData)
         {
 
           var lavaTransferMethod;
@@ -340,17 +340,17 @@ export default class LavaPacketUtils {
           return lavaTransferMethod;
 
         }
-
+*/
 
         static getFunctionCall(web3,packetData)
         {
 
-
+              const TransferMethodBytes = '0x7472616e73666572'
 
           var txData;
 
 
-          if(packetData.method == 'transfer')
+          if(packetData.method == TransferMethodBytes)
           {
             txData  = web3.eth.abi.encodeFunctionCall({
                       name: 'transferTokensFromWithSignature',
@@ -400,10 +400,10 @@ export default class LavaPacketUtils {
                       packetData.signature
                 ]);
 
-         }else if(packetData.method == 'withdraw')
+         }else  
           {
             txData  = web3.eth.abi.encodeFunctionCall({
-                      name: 'withdrawTokensFromWithSignature',
+                      name: 'transferAndCallFromWithSignature',
                       type: 'function',
                       "inputs": [
                         {
@@ -450,113 +450,7 @@ export default class LavaPacketUtils {
                       packetData.signature
                 ]);
 
-         }else if(packetData.method == 'approve')
-         {
-           txData  = web3.eth.abi.encodeFunctionCall({
-                     name: 'approveTokensFromWithSignature',
-                     type: 'function',
-                     "inputs": [
-                       {
-                         "name": "from",
-                         "type": "address"
-                       },
-                       {
-                         "name": "to",
-                         "type": "address"
-                       },
-                       {
-                         "name": "token",
-                         "type": "address"
-                       },
-                       {
-                         "name": "tokens",
-                         "type": "uint256"
-                       },
-                       {
-                         "name": "relayerReward",
-                         "type": "uint256"
-                       },
-                       {
-                         "name": "expires",
-                         "type": "uint256"
-                       },
-                       {
-                         "name": "nonce",
-                         "type": "uint256"
-                       },
-                       {
-                         "name": "signature",
-                         "type": "bytes"
-                       }
-                     ]
-                 }, [
-                     packetData.from,
-                     packetData.to,
-                     packetData.tokenAddress,
-                     packetData.tokenAmount,
-                     packetData.relayerReward,
-                     packetData.expires,
-                     packetData.nonce,
-                     packetData.signature
-               ]);
-
-        }else
-        {
-          txData  = web3.eth.abi.encodeFunctionCall({
-                    name: 'approveAndCall',
-                    type: 'function',
-                    "inputs": [
-                      {
-                        "name": "method",
-                        "type": "bytes"
-                      },
-                      {
-                        "name": "from",
-                        "type": "address"
-                      },
-                      {
-                        "name": "to",
-                        "type": "address"
-                      },
-                      {
-                        "name": "token",
-                        "type": "address"
-                      },
-                      {
-                        "name": "tokens",
-                        "type": "uint256"
-                      },
-                      {
-                        "name": "relayerReward",
-                        "type": "uint256"
-                      },
-                      {
-                        "name": "expires",
-                        "type": "uint256"
-                      },
-                      {
-                        "name": "nonce",
-                        "type": "uint256"
-                      },
-                      {
-                        "name": "signature",
-                        "type": "bytes"
-                      }
-                    ]
-                }, [
-                    packetData.method,
-                    packetData.from,
-                    packetData.to,
-                    packetData.tokenAddress,
-                    packetData.tokenAmount,
-                    packetData.relayerReward,
-                    packetData.expires,
-                    packetData.nonce,
-                    packetData.signature
-              ]);
-
-        }
-
+         } 
 
 
               return txData;

@@ -17,9 +17,8 @@
       "LavaWallet":{"name":"Lava Wallet", "address":"0x56398FdFD684b40B17B09BB1Cf826ED93A38C489"},
        
     
-      "weth":{"name":"wEth", "decimals":18, "address":"0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1", "imgurl":"/assets/images/tokens/weth.png" },
-      "wxdai":{"name":"wxDai", "decimals":18, "address":"0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d", "imgurl":"/assets/images/tokens/dai.png" },
-      "zxbtc":{"name":"0xBTC", "decimals":8, "address":""} 
+      "weth":{"name":"wEth", "decimals":18, "address":"0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1", "imgurl":"/assets/images/tokens/weth.png" }, 
+      "zxbtc":{"name":"0xBTC", "decimals":8, "address":"0x370825bc4f39c72ba84d290db131bccb35aa1d49", "imgurl":"/assets/images/tokens/0xbtc.png"} 
 
       
     }
