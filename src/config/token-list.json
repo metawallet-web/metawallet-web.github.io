@@ -2,7 +2,8 @@
   "mainnet":["DAI"],
     
   
-    "kovan":[ "TEST" ]
+    "kovan":[ "TEST" ],
+    "xdai":[ "wxdai" , "weth"]
 
   }
 }
