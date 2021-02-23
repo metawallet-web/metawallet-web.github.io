@@ -572,7 +572,7 @@ export default {
        
 
         let lavaPacketInputData = {
-          method:'transfer',
+          method: web3utils.fromAscii('transfer'),
           relayAuthority: "0x0000000000000000000000000000000000000000", 
           from: primaryAddress,
           to: this.transferTokenRecipient,
@@ -683,7 +683,7 @@ export default {
         let assetData = this.selectedActionAsset
 
         let allAccounts = await this.web3Plug.getConnectedAccounts() 
-        let primaryAddress =  window.web3.utils.toChecksumAddress( allAccounts[0] ) 
+        let primaryAddress =  this.web3Plug.web3.utils.toChecksumAddress( allAccounts[0] ) 
  
         let contractData = this.web3Plug.getContractDataForActiveNetwork();
         let lavaContractAddress = contractData['LavaWallet'].address
@@ -692,7 +692,7 @@ export default {
 
 
        
-        let databytes =  abi.encodedPacked(this.transferTokenRecipient, '0x3',  '0x4' )  
+        let databytes =  this.web3Plug.web3.eth.abi.encodeParameters( ['address','bytes32','bytes32'], [this.transferTokenRecipient, '0x3',  '0x4'] )   
 
         let middlemanContractAddress  =  contractData['MetadataMiddleman'].address
        

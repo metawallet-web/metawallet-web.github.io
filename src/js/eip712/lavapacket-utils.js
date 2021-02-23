@@ -165,7 +165,7 @@ export default class LavaPacketUtils {
                       { name: "verifyingContract", type: "address" }
                   ],
                   LavaPacket: [
-                      { name: 'methodName', type: 'string' },
+                      { name: 'methodName', type: 'bytes' },
                       { name: 'relayAuthority', type: 'address' },
                       { name: 'from', type: 'address' },
                       { name: 'to', type: 'address' },
