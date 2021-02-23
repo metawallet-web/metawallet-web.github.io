@@ -8,16 +8,16 @@
          
           <div class="tabs flex flex-col sm:flex-row select-none">
 
-            <div class="tab bg-gray-700 text-gray-300 py-4 px-6 block hover:text-blue-500 focus:outline-none cursor-pointer"  
-            v-bind:class="{   'text-blue-500 bg-gray-800':(selectedActionType=='permit')  } " 
-            @click="selectAction('permit')"
-            >
+                  <div class="tab bg-gray-700 text-gray-300 py-4 px-6 block hover:text-blue-500 focus:outline-none cursor-pointer"  
+                  v-bind:class="{   'text-blue-500 bg-gray-800':(selectedActionType=='permit')  } " 
+                  @click="selectAction('permit')"
+                  >
 
- 
-                  <a>
-                    <div class="icon is-small inline">   <i class="material-icons">file_download</i> </div>
-                    <div class="inline ">Permit For Lava</div>
-                  </a>
+    
+                      <a>
+                        <div class="icon is-small inline">   <i class="material-icons">file_download</i> </div>
+                        <div class="inline ">Permit For Lava</div>
+                      </a>
                  
 
                  </div>
@@ -28,13 +28,28 @@
                     >
 
 
-            <a>
-                    <div class="icon is-small one-third inline"> <i class="material-icons">fast_forward</i> </div>
-                    <div class="inline " >Lava Transfer</div>
-                  </a>
-                
- 
-            </div>   
+                      <a>
+                        <div class="icon is-small one-third inline"> <i class="material-icons">fast_forward</i> </div>
+                        <div class="inline " >Standard Transfer</div>
+                      </a>
+                    
+    
+                  </div>   
+
+                   <div class="tab bg-gray-700 text-gray-300 py-4 px-6 block hover:text-blue-500 focus:outline-none cursor-pointer" 
+                    v-bind:class="{   'text-blue-500 bg-gray-800':(selectedActionType=='metadatatransfer')  } " 
+                   @click="selectAction('metadatatransfer')"
+                    >
+
+
+                      <a>
+                        <div class="icon is-small one-third inline"> <i class="material-icons">fast_forward</i> </div>
+                        <div class="inline " >Metadata Transfer</div>
+                      </a>
+                    
+    
+                  </div>   
+
 
 
             </div>
@@ -179,16 +194,7 @@
 
 
 
-                      <div class="form-group padding-md">
-                          <div class="label">Method</div>
-
-                         <div class="select">
-                            <select class=" text-black " onchange=" " v-model="transferTokenMethod" placeholder="">
-                              <option>transfer</option>
-                              <option>approveAndCall</option>
-                           </select>
-                         </div>
-                      </div>
+                    
 
                       <div class="form-group padding-md">
                           <div class="label">Amount</div>
@@ -281,6 +287,125 @@
 
           </div>
 
+
+
+
+
+          <div class="lava-transfer-container  m-4 p-4" v-if="(selectedActionType=='metadatatransfer')" v-cloak>
+
+             
+            <div class=" ">
+            
+
+              <p> Generate a signed Metadata Transfer Message.  This message can be submitted to the Ethereum network by anyone, at which point the tokens will be transferred to the recipient's account.  </p>
+
+
+              <div class="whitespace-sm"></div>
+
+
+                <div class="flex flex-row w-full">
+                    <div class="w-1/2 p-4">
+
+ 
+
+                      <div class="form-group padding-md">
+                          <div class="label">Amount</div>
+                          <input class="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline" v-model="transferTokenQuantity" placeholder="token amount">
+                      </div>
+
+                      <div class="form-group padding-md">
+                          <div class="label">Recipient</div>
+                          <input class="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline" v-model="transferTokenRecipient" placeholder="token recipient">
+                      </div>
+
+
+                      <div class="form-group padding-md">
+                          <div class="label">Relay Authority</div>
+
+                         <div class="select">
+                            <select class=" text-black  " onchange=" " v-model="relayAuthorityType" placeholder="">
+                              <option>any relayers</option>
+                           </select>
+                         </div>
+                      </div>
+
+                      <div class="form-group padding-md">
+                          <div class="label">Relay Reward (tokens)</div>
+                          <div><span> Optional </span></div>
+                          <input class="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline" v-model="transferTokenRelayReward" placeholder="token relay reward">
+                      </div>
+
+                      <div class="whitespace-sm"></div>
+                        
+                         <div class="button inline-block bg-green-500 hover:bg-green-700 text-white font-bold m-2 py-2 px-4 rounded cursor-pointer" v-on:click="actionSignMetadataPacket"> Sign </div>
+           
+
+                     </div>
+                   <div class="w-1/2 p-4 ">
+
+                       
+                        
+
+                       <div class="is-size-6">   </div>
+
+                       <p v-if="lavaMetadata"> Specify the URL for a Lava Network Node and broadcast this packet to the Lava Network Relayers.  They will submit the packet to the Ethereum Network if the reward is high enough.  </p>
+
+                       <div class="form-group padding-md" v-if="lavaMetadata">
+                           <div class="label">Relay Node URL</div>
+                           <input class="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline" v-model="relayNodeURL" placeholder="xxx.xxx.xxx.xxx:yyyy">
+                         
+
+                             <div class="whitespace-sm"></div>
+
+                           <div id="btn-broadcast-lava-packet" v-if="lavaMetadata">
+                             <div class="button inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold m-2 py-2 px-4 rounded cursor-pointer" v-on:click="actionBroadcastMetadataPacket">Broadcast Lava Packet To Relay</div>
+                           </div>
+
+                         
+
+                           <div class="subtitle color-primary has-text-centered" v-cloak v-if="lavaMetadata && broadcastMessage" >
+                             {{ broadcastMessage }}
+                           </div>
+
+                             <div class="whitespace-sm"></div>
+                       </div>
+
+
+
+
+                      <div class="whitespace-sm"></div>
+
+                       <div class="form-group padding-md" v-if="lavaMetadata">
+                           <div> Meta Packet </div> 
+                          <textarea class="text-black" v-model="lavaMetadata"></textarea>
+                       
+                       </div>
+
+
+
+
+                      <div class="whitespace-sm"></div>
+
+                       <div class="button inline-block bg-purple-500 hover:bg-purple-700 text-white font-bold m-2 py-2 px-4 rounded cursor-pointer" v-if="lavaMetadata" v-on:click="actionSubmitMetadataPacket"> Submit Metadata Tx </div>
+
+                      <div class="loader inline-block" v-if="pendingTransaction">  </div>
+
+
+
+                   </div>
+              </div>
+           </div>
+
+
+          </div>
+
+
+
+
+
+
+
+
         </div>
 
 </template>
@@ -324,7 +449,7 @@ export default {
 
         transferTokenQuantity:null,
         transferTokenRecipient:null,
-        transferTokenMethod:'transfer',
+     //   transferTokenMethod:'transfer',
          transferTokenRelayReward:null,
          relayAuthorityType:['any relayers'],
 
@@ -543,6 +668,139 @@ export default {
             }
  
       },
+
+
+      //--------------------------- 
+
+
+
+
+      async actionSignMetadataPacket(){
+          console.log('actionSignMetadataPacket!!')
+
+
+
+        let assetData = this.selectedActionAsset
+
+        let allAccounts = await this.web3Plug.getConnectedAccounts() 
+        let primaryAddress =  window.web3.utils.toChecksumAddress( allAccounts[0] ) 
+ 
+        let contractData = this.web3Plug.getContractDataForActiveNetwork();
+        let lavaContractAddress = contractData['LavaWallet'].address
+
+        let tokenDecimals = assetData.decimals
+
+
+       
+        let databytes = web3utils.padLeft( this.transferTokenRecipient, 32 );
+        //databytes = databytes.concat(  web3utils.hexToUtf8(  '0x3' ) )
+        //databytes = databytes.concat(  web3utils.hexToUtf8(  '0x4' ) )
+
+        let middlemanContractAddress  =  contractData['SimpleMiddleman'].address
+       
+
+        let lavaPacketInputData = {
+          method:databytes ,
+          relayAuthority: "0x0000000000000000000000000000000000000000", 
+          from: primaryAddress,
+          to: middlemanContractAddress,
+          walletAddress: lavaContractAddress,
+          tokenAddress: assetData.address,
+          tokenAmount: this.web3Plug.formattedAmountToRaw(this.transferTokenQuantity,tokenDecimals).toString() ,
+          relayerReward: this.web3Plug.formattedAmountToRaw(this.transferTokenRelayReward,tokenDecimals).toString(),
+          expires: 0,
+          nonce:  LavaPacketUtils.generateRandomNonce()
+        }
+ 
+
+           console.log('lavaPacketInputData',lavaPacketInputData)
+
+        let signResult = await LavaPacketUtils.performOffchainSignForLavaPacket(lavaPacketInputData, this.web3Plug)
+          console.log('signResult',signResult)
+
+
+          this.lavaMetadata = JSON.stringify( 
+              Object.assign( lavaPacketInputData , { signature: signResult.signature })
+            )
+
+
+      },
+
+        async actionSubmitMetadataPacket(){
+            let assetData = this.selectedActionAsset
+
+            let allAccounts = await this.web3Plug.getConnectedAccounts() 
+            let primaryAddress =  window.web3.utils.toChecksumAddress( allAccounts[0] ) 
+
+
+            let contractData = this.web3Plug.getContractDataForActiveNetwork();
+
+            let lavaWalletAddress = contractData['LavaWallet'].address
+            
+            let lavaWalletContract = this.web3Plug.getCustomContract(this.web3Plug.web3, lavaWalletABI, lavaWalletAddress)
+
+             let metadata = JSON.parse(this.lavaMetadata)
+
+            console.log('metadata' , metadata)
+
+              delete metadata['walletAddress']; 
+ 
+
+            let lavaArgs = Object.values(  metadata  )
+
+              console.log('lavaArgs' , lavaArgs)
+ 
+
+            this.pendingTransaction = true
+
+            let txResult = await lavaWalletContract.methods.transferAndCallWithSignature(...lavaArgs).send({from: primaryAddress}) 
+
+            console.log('txResult', txResult)
+
+            this.permitMetaData = null 
+            this.pendingTransaction = false
+
+      },
+
+
+      async actionBroadcastMetadataPacket(){
+
+        console.log('broadcast metadata packet ')
+
+          let fullURL = this.relayNodeURL 
+
+
+          let metadata = JSON.parse(this.lavaMetadata)
+
+
+          let dataToPost = metadata
+
+          this.broadcastMessage = null
+  
+         let result = await  MetaPacketHelper.sendLavaPacket(fullURL,dataToPost)
+ 
+
+          console.log(result)
+
+            if(result.gotReply){
+              let response = result.response 
+              
+              if(response.success){
+                this.broadcastMessage = "Broadcast successful."
+
+              }else{
+                  this.broadcastMessage = response.message
+              }
+              
+
+            }
+ 
+      },
+
+
+
+
+      //---------------------------
 
       async actionBroadcastPermitPacket(){
 
